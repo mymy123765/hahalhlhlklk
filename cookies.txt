@@ -1,1 +1,110 @@
-ASP.NET_SessionId=qvkrutngt2hu0udm3z5jhcz2; _ga=GA1.2.1696413369.1624261372; _gid=GA1.2.2060917131.1624261372; __auc=07d08a0a17a2d85aaf21a4c9ce1; _ym_uid=1624261373531451016; _ym_d=1624261373; __gads=ID=d17905afad4bdb92-226b5bb90dc9000d:T=1624261373:S=ALNI_MYeweUqgjG6uGIsNErUXJsMTFCzFQ; _ym_isad=1; __test; __PPU___PPU_SESSION_URL=%2F; _pbjs_userid_consent_data=6683316680106290; __asc=c7b022d317a2da4dd38dbc6581f; cf_clearance=2d4424a64416139fb51716c3b546c1c15cf9b5fb-1624264563-0-150; __atuvc=16%7C25; __atuvs=60d04af91590ae6c007; cto_bidid=JtgnP183b3Rvc0poWHNSZ3lFeDlRV09XRzdqUTFFdm4xJTJCekwxVXV1clhSY0tVZ2UwRXRxRE5iVmdRRVFYMXglMkJINkhLRnZoT1JKZjBGMENXd0pjb0tNejNha1ElM0QlM0Q; cto_bundle=l6LhQF9VJTJGZTdRS1BIR2Z0Ym9ZWTVzS2JtV0V2T3hiTEJ4QTlXNlRRVnB3RFVoT3JOQyUyQklRN1U5OVdwQ0QzY1ZaRnFSdVprUXBWUVk1TUNMU1RMbVFKQTNrcyUyQnM1RjFDR0dkcWhUdSUyQjJHSWtXOEM1WnpJMTZwWkpqTUhyN2pITzZKJTJCR2Q
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace _32_2033216537_NguyenHuynhThanhTai_Tuan6_THLTHDD
+{
+    class NhanVien
+    {
+        protected string maNhanVien;
+        protected string tenNhanVien;
+        protected double heSoLuong;
+
+        public NhanVien()
+        {
+            maNhanVien = "NV001";
+            tenNhanVien = "Họ Tên Nhân Viên";
+            heSoLuong = 2.34;
+        }
+
+        public NhanVien(string maNV, string tenNV, double heSo)
+        {
+            if (maNV.Length >= 2 && maNV.Substring(0, 2) == "NV")
+                maNhanVien = maNV;
+            else
+                maNhanVien = "NV001";
+
+            tenNhanVien = tenNV;
+            heSoLuong = heSo;
+        }
+
+        public double ThuNhap()
+        {
+            double luongCoBan = 1150;
+            return heSoLuong * luongCoBan;
+        }
+
+        public void Xuat()
+        {
+            Console.WriteLine("Mã nhân viên: " + maNhanVien);
+            Console.WriteLine("Tên nhân viên: " + tenNhanVien);
+            Console.WriteLine("Hệ số lương: " + heSoLuong);
+            Console.WriteLine("Thu nhập: " + ThuNhap());
+        }
+    }
+
+    class CBLanhDao : NhanVien
+    {
+        private string chucVu;
+        private int thamNienQuanLy;
+
+        public CBLanhDao()
+        {
+            maNhanVien = "NV009";
+            tenNhanVien = "Dieu Hien";
+            heSoLuong = 4.67;
+            chucVu = "Giám đốc";
+            thamNienQuanLy = 10;
+        }
+
+        public new double ThuNhap()
+        {
+            double luongCoBan = 1150;
+            double phuCapLanhDao = 1500 * heSoLuong;
+
+            switch (chucVu)
+            {
+                case "Giám đốc":
+                    heSoLuong = 7.0;
+                    break;
+                case "Trưởng phòng":
+                    heSoLuong = 6.0;
+                    break;
+                case "Phó phòng":
+                    heSoLuong = 4.5;
+                    break;
+                default:
+                    heSoLuong = 1.0;
+                    break;
+            }
+
+            return base.ThuNhap() + phuCapLanhDao;
+        }
+
+        public void Xuat()
+        {
+            base.Xuat();
+            Console.WriteLine("Chức vụ: " + chucVu);
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            NhanVien nv = new NhanVien();
+            Console.WriteLine("Thông tin nhân viên:");
+            nv.Xuat();
+
+            Console.WriteLine();
+
+            CBLanhDao cbld = new CBLanhDao();
+            Console.WriteLine("Thông tin cán bộ lãnh đạo:");
+            cbld.Xuat();
+
+            Console.ReadLine();
+        }
+    }
+
+}
